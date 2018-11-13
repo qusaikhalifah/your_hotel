@@ -1,0 +1,228 @@
+<?php
+
+$hotelname=$_POST["HotelName"];
+$place=$_POST["place"];
+$descr=$_POST["descr"];
+$catid=$_POST["catid"];
+$price=$_POST["price"];
+$pic=$_POST["pic"];
+
+$servername ="localhost";
+$username="root";
+$password="";
+$db_name="store";
+
+
+$conn= new mysqli($servername,$username,$password,$db_name);
+
+if($conn -> connect_error){
+	
+	die(" Not Connected  :( ".$conn -> connect_error);
+}
+
+else{
+	
+	 "All Good < Connected :) "."<br>";
+
+	
+
+	
+	$sql = "SELECT * FROM productcat ";
+	
+	$result = $conn ->query($sql);
+
+		
+			$Select = "<select class ='selectpicker' title='stars' name='catid' style='background-color:#3c6084; color:white;'>
+			<option  vlaue ='0'>Stars</option>";
+		
+		while($row = mysqli_fetch_assoc($result )){
+			
+			$Select=$Select."
+			<option  vlaue ='".$row["id"]."'>".$row["catname"]."</option>";
+		}
+		 
+} 
+		$Select=$Select."</select>";
+
+        if($hotelname==null && $place==null && $descr==null && $price==null && $pic==null){
+			
+			"error";
+		}else{
+		
+       
+	$sql="INSERT INTO prodect(HotelName,place,descr,catid,price,pic) VALUES('$hotelname','$place','$descr','$catid','$price','$pic')";
+
+	if($conn->multi_query($sql)==TRUE){
+	header('location:done.php');exit();
+}else{
+	"error";
+}
+
+	 
+	 }
+
+
+
+
+?>
+
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Your Hotel</title>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/modern-business.css" rel="stylesheet">
+
+  </head>
+
+  <body style="background-image:url(beach-clouds-daytime-1423292.jpg); background-size:100% 100%;">
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div style="width:100%;"  class="container">
+        <i style=" color:#bbbbbb;  padding-right:0.5em; font-size:40px;"  class="fas fa-h-square"></i><a class="navbar-brand" href="home.php" style="font-size:28px; color:#42b97c;"><b>Your Hotel</b></a>
+		<link rel="shortcut icon" href="HotelIcon.png" type="image/x-icon" />
+
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div  class="collapse navbar-collapse" id="navbarResponsive">
+          <ul   class="navbar-nav ml-auto">
+            <li class="nav-item">
+			
+			 <li   class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" style="font-size:18px;" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Hotels
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                <a class="dropdown-item" style="font-size:15px;" href="sh.php">Cheap</a>
+				 <a class="dropdown-item" style="font-size:15px;" href="ex.php">Expensive</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+         
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" style="font-size:18px;" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Other Pages
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                <a class="dropdown-item" style="font-size:15px;" href="about.html">About</a>
+				<a class="dropdown-item" style="font-size:15px;" href="contact.html">Contact</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+         
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <h1 class="my-4"></h1>
+
+      <!-- Marketing Icons Section -->
+     
+      <!-- /.row -->
+
+      <!-- Portfolio Section -->
+	  <div  class="container">
+  <h2 style="margin-left:12em; margin-top:1em; font-size:30px;">Add your hotel to the page</h2>
+  <br><br>
+  <form action="input.php" method="post">
+  
+  
+    <div class="form-group">
+      <label style=" font-size:17px; color:#42b97c" for="usr">Hotel Name:</label>
+      <input style="font-size:17px;" type="text" class="form-control" id="usr" name="HotelName" required>
+    </div>
+	
+	
+	<div class="form-group">
+      <label style=" font-size:17px;color:#42b97c;" for="usr">Place:</label>
+      <input style="font-size:17px; " type="text" class="form-control" id="usr" name="place" required>
+    </div>
+    
+	
+	<div  class="form-group">
+      <label style="font-size:17px; color:#42b97c;" for="usr">Desc:</label>
+      <input style="font-size:17px;"  type="text" class="form-control" id="usr" name="descr" required>
+    </div>
+	
+	
+	
+	<div  class="form-group">
+      <label style="font-size:17px; color:#42b97c; " for="usr">price:</label>
+      <input style="font-size:17px;"  type="text" class="form-control" id="usr" name="price" required>
+    </div>
+	
+	
+  	<div  style="font-size:17px;" class="form-group">
+     <?echo $Select; ?>
+	 <input style="margin-top:-1.5em; margin-left:22em;" type="file" name="pic" accept="pic/*" required>
+    </div>
+	
+	  
+
+   	<div style="font-size:17px;" class="form-group">
+	<input type="submit" value="Join"> 
+	</div>
+	
+
+
+  
+  
+
+  			
+  </form>
+</div>
+
+      <!-- /.row -->
+
+      <!-- Features Section -->
+      
+      <!-- /.row -->
+
+      <hr>
+
+      <!-- Call to Action Section -->
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <p></p>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer style="margin-top:48em;" class="py-5 bg-dark">
+      <div  class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
